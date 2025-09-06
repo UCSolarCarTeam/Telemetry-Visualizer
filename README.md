@@ -41,7 +41,7 @@ This repository contains a Grafana Dashboard for visualizing telemetry data usin
    If you have an MQTT client set up, start it to publish telemetry data to the broker. Ensure it is configured to connect to `host.docker.internal:1883` with the appropriate credentials.
 
 1. **Access Grafana**:
-   Open your web browser and go to `http://localhost:3000`. The default login credentials are:
+   Open your web browser and go to <http://localhost:3000>. The default login credentials are:
 
    - **Username**: admin
    - **Password**: admin

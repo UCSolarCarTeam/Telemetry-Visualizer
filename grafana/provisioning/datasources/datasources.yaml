@@ -1,11 +1,23 @@
 apiVersion: 1
 
 datasources:
+  # configruation setup viewable here: https://github.com/grafana/mqtt-datasource/blob/main/src/ConfigEditor.tsx
   - name: MQTT
     type: grafana-mqtt-datasource
-    uid: dexa2juey4lj4b
-    access: proxy
     editable: true
+    isDefault: true
+    secureJsonData:
+      password: ${MQTT_PASSWORD}
     jsonData:
-      mqttServer: "host.docker.internal:1883"
-      topic: "packet"
+      username: "primaryuser"
+      uri: host.docker.internal:1883
+
+  # - name: Postgres
+  #   type: postgres
+  #   url: postgres:5432
+  #   user: yourusername
+  #   secureJsonData:
+  #     password: "yourpassword"
+  #   jsonData:
+  #     database: mqtt
+  #     sslmode: "disable" # disable/require/verify-ca/verify-full
