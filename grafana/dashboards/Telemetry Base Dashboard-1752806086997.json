@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "dexa2juey4lj4b"
+        "uid": "P51B197A508373975"
       },
       "fieldConfig": {
         "defaults": {
@@ -114,7 +114,7 @@
           "id": "extractFields",
           "options": {
             "delimiter": ",",
-            "source": "ProximitySensors"
+            "source": "B3"
           }
         }
       ],
@@ -123,7 +123,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
+        "uid": "P51B197A508373975"
       },
       "fieldConfig": {
         "defaults": {
@@ -158,7 +158,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 5,
       "options": {
@@ -270,7 +270,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
+        "uid": "P51B197A508373975"
       },
       "fieldConfig": {
         "defaults": {
@@ -333,9 +333,7 @@
               "id": "byNames",
               "options": {
                 "mode": "exclude",
-                "names": [
-                  "MotorCurrent"
-                ],
+                "names": ["MotorCurrent"],
                 "prefix": "All except:",
                 "readOnly": true
               }
@@ -357,7 +355,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "id": 4,
       "options": {
@@ -403,7 +401,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 24
       },
       "id": 2,
       "panels": [],
@@ -413,7 +411,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
+        "uid": "P51B197A508373975"
       },
       "fieldConfig": {
         "defaults": {
@@ -475,9 +473,7 @@
               "id": "byNames",
               "options": {
                 "mode": "exclude",
-                "names": [
-                  "ArrayChargeCurrent"
-                ],
+                "names": ["ArrayChargeCurrent"],
                 "prefix": "All except:",
                 "readOnly": true
               }
@@ -499,7 +495,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 25
       },
       "id": 1,
       "options": {
@@ -545,7 +541,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
+        "uid": "P51B197A508373975"
       },
       "fieldConfig": {
         "defaults": {
@@ -607,9 +603,7 @@
               "id": "byNames",
               "options": {
                 "mode": "exclude",
-                "names": [
-                  "AverageCellVoltage"
-                ],
+                "names": ["AverageCellVoltage"],
                 "prefix": "All except:",
                 "readOnly": true
               }
@@ -631,7 +625,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 25
       },
       "id": 3,
       "options": {
