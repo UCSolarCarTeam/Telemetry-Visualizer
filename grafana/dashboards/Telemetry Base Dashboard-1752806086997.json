@@ -1,41 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_GRAFANA-MQTT-DATASOURCE",
-      "label": "grafana-mqtt-datasource",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "grafana-mqtt-datasource",
-      "pluginName": "MQTT"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "geomap",
-      "name": "Geomap",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "12.0.1+security-01"
-    },
-    {
-      "type": "datasource",
-      "id": "grafana-mqtt-datasource",
-      "name": "MQTT",
-      "version": "1.1.0-beta.3"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -55,9 +18,108 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 1,
   "links": [],
   "panels": [
+    {
+      "datasource": {
+        "type": "grafana-mqtt-datasource",
+        "uid": "dexa2juey4lj4b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.1.1",
+      "targets": [
+        {
+          "refId": "A",
+          "topic": "packet"
+        }
+      ],
+      "title": "Proximity Sensors",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "source": "ProximitySensors"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
@@ -80,7 +142,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -170,15 +233,15 @@
           "zoom": 1
         }
       },
-      "pluginVersion": "12.0.1+security-01",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
-          "refId": "A",
-          "topic": "packet",
           "datasource": {
             "type": "grafana-mqtt-datasource",
             "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
-          }
+          },
+          "refId": "A",
+          "topic": "packet"
         }
       ],
       "title": "GeoMap",
@@ -252,7 +315,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -309,15 +373,15 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.1+security-01",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
-          "refId": "A",
-          "topic": "packet",
           "datasource": {
             "type": "grafana-mqtt-datasource",
             "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
-          }
+          },
+          "refId": "A",
+          "topic": "packet"
         }
       ],
       "title": "Packet/KeyMotor",
@@ -394,7 +458,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -450,7 +515,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.1+security-01",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
           "datasource": {
@@ -525,7 +590,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -581,15 +647,15 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.1+security-01",
+      "pluginVersion": "12.1.1",
       "targets": [
         {
-          "refId": "A",
-          "topic": "packet",
           "datasource": {
             "type": "grafana-mqtt-datasource",
             "uid": "${DS_GRAFANA-MQTT-DATASOURCE}"
-          }
+          },
+          "refId": "A",
+          "topic": "packet"
         }
       ],
       "title": "Packet/Battery",
@@ -607,6 +673,7 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "1m",
   "schemaVersion": 41,
   "tags": [],
@@ -621,6 +688,5 @@
   "timezone": "browser",
   "title": "Telemetry Base Dashboard",
   "uid": "40c53014-a3c2-47e8-8c8b-3ce15a6ecc64",
-  "version": 6,
-  "weekStart": ""
+  "version": 1
 }
