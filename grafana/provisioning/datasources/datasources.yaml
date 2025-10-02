@@ -9,7 +9,7 @@ datasources:
     secureJsonData:
       password: ${MQTT_PASSWORD}
     jsonData:
-      username: "primaryuser"
+      username: ${MQTT_USERNAME}
       uri: host.docker.internal:1883
 
   # - name: Postgres

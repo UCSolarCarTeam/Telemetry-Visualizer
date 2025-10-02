@@ -90,3 +90,54 @@ Use the following commands to interact with the MQTT broker and visualize data:
 ```bash
 docker run -it --rm eclipse-mosquitto mosquitto_sub   -h 10.0.0.63 -p 1883   -u [ username ] -P [password]   -t packet
 ```
+
+## Pushing updates to AWS Elastic Container Registry (ECR)
+
+To push updates to AWS ECR, follow these steps:
+
+1. **Authenticate Docker to AWS ECR**
+   Use the AWS CLI to authenticate Docker to your ECR registry. Replace `[aws-region]` with your AWS region.
+
+   ```bash
+   aws ecr get-login-password --region [aws-region] | docker login --username AWS --password-stdin [aws-account-id].dkr.ecr.[aws-region].amazonaws.com
+   ```
+
+1. **Build the Docker Image**
+   Navigate to the directory containing your Dockerfile and build the image. Replace `[image-name]` with your desired image name.
+
+   ```bash
+   cd grafana
+   docker build -t [image-name] .
+   ```
+
+1. **Tag the Docker Image**
+   Tag the image to match your ECR repository. Replace `[aws-account-id]`, `[aws-region]`, and `[image-name]` with your AWS account ID, region, and image name respectively.
+
+   ```bash
+   docker tag [image-name]:latest [aws-account-id].dkr.ecr.[aws-region].amazonaws.com/[image-name]:latest
+   ```
+
+1. **Tag the Docker Image**
+   Tag the image to match your ECR repository. Replace `[aws-account-id]`, `[aws-region]`, and `[image-name]` with your AWS account ID, region, and image name respectively.
+
+   ```bash
+   docker tag [image-name]:latest [aws-account-id].dkr.ecr.[aws-region].amazonaws.com/[image-name]:latest
+   ```
+
+1. **Push the Docker Image to ECR**
+   Push the tagged image to your ECR repository.
+
+   ```bash
+   docker push [aws-account-id].dkr.ecr.[aws-region].amazonaws.com/[image-name]:latest
+   ```
+
+1. **Push the Docker Image to ECR**
+   Push the tagged image to your ECR repository.
+
+   ```bash
+   docker push [aws-account-id].dkr.ecr.[aws-region].amazonaws.com/[image-name]:latest
+   ```
+
+### Learn more here
+
+<https://ca-central-1.console.aws.amazon.com/ecr/repositories/private/602361116849/telemetry-visualizer?region=ca-central-1>
