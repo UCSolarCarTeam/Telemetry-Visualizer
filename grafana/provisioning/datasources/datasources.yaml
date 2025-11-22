@@ -11,6 +11,13 @@ datasources:
     jsonData:
       username: ${MQTT_USERNAME}
       uri: host.docker.internal:1883
+  
+  - name: WebSocket API
+    type: golioth-websocket-datasource
+    editable: true
+    isDefault: false
+    jsonData: 
+      host: ws://host.docker.internal:3001/grafana-ws
 
   # - name: Postgres
   #   type: postgres
