@@ -1,16 +1,51 @@
-name: Template workflow
+name: Docker Build and Test
 
 on:
-  # Comment this out if you only want Github Actions
-  # to run on pull requests.
   push:
+    paths:
+      - 'grafana/**'
+      - '.github/workflows/workflow.yml'
   pull_request:
+    paths:
+      - 'grafana/**'
+      - '.github/workflows/workflow.yml'
 
 jobs:
   build:
-    runs-on: ubtuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Run template workflow
-        run: echo This is a template, please update this.
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Validate docker-compose.yml
+        run: |
+          cd grafana
+          docker compose config
+
+      - name: Build Docker images
+        run: |
+          cd grafana
+          docker compose pull
+          docker compose build
+
+      - name: Start services
+        run: |
+          cd grafana
+          docker compose up -d
+
+      - name: Wait for Grafana to be ready
+        run: |
+          timeout 60 bash -c 'until curl -f http://localhost:3000/api/health; do sleep 2; done'
+
+      - name: Check Grafana health
+        run: |
+          curl -f http://localhost:3000/api/health
+
+      - name: Stop services
+        if: always()
+        run: |
+          cd grafana
+          docker compose down -v
