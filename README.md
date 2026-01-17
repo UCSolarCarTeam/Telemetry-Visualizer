@@ -2,6 +2,15 @@
 
 This repository contains a Grafana Dashboard for visualizing telemetry data using MQTT.
 
+## Discord Alerts
+
+Join our Discord to receive automated alerts based on Grafana telemetry thresholds:
+[https://discord.gg/pFnUYfB9kc](https://discord.gg/pFnUYfB9kc)
+
+Grafana is configured to generate alerts when selected telemetry values exceed (or fall below) defined threshold limits. These thresholds can be set per metric directly within Grafana’s alerting rules. When a threshold condition is met—such as high motor temperature, low state of charge, or abnormal voltage—Grafana can trigger a notification that is forwarded to this Discord server.
+
+This allows real-time monitoring of vehicle performance, with Discord serving as a centralized place for team members to receive and respond to alerts.
+
 ## Prerequisites
 
 - Docker installed on your machine.
