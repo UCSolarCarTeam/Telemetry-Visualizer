@@ -14,7 +14,7 @@ datasources:
 
   - name: grafana-postgresql-datasource
     type: postgres
-    url: l6yyro58r7.wy9edrssy5.tsdb.cloud.timescale.com:38572
+    url: ${POSTGRES_HOST}
     database: tsdb
     user: ${POSTGRES_USERNAME}
     secureJsonData:
