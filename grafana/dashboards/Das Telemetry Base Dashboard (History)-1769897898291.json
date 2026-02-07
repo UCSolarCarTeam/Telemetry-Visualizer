@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 8,
   "links": [],
   "panels": [
     {
@@ -52,7 +52,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -130,13 +130,13 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -146,57 +146,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"PackCurrent\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"PackVoltage\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"PackStateOfCharge\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"PackAmphours\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"RegenBraking\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -209,8 +159,7 @@
               }
             ],
             "limit": 50
-          },
-          "table": "telemetry_packet"
+          }
         }
       ],
       "title": "Packet (History)",
@@ -219,7 +168,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -268,13 +217,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -284,21 +233,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"EnergyConsumed\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -311,32 +246,16 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
-        }
-      ],
-      "title": "Energy Consumed",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "energyConsumed"
-              }
-            ],
-            "source": "PackVoltage"
           }
         }
       ],
+      "title": "Energy Consumed",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -385,13 +304,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -401,21 +320,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"TotalPowerIn\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -428,32 +333,16 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
-        }
-      ],
-      "title": "Total Power In",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "totalPowerIn"
-              }
-            ],
-            "source": "data"
           }
         }
       ],
+      "title": "Total Power In",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -502,13 +391,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -518,21 +407,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"AveragePackCurrent\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -545,33 +420,16 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
-        }
-      ],
-      "title": "Average Pack Current",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "averagePackCurrent"
-              }
-            ],
-            "replace": true,
-            "source": "data"
           }
         }
       ],
+      "title": "Average Pack Current",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -620,13 +478,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -636,12 +494,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"TotalPowerOut\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -654,32 +507,16 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
-        }
-      ],
-      "title": "Total Power Consumption",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "totalPowerOut"
-              }
-            ],
-            "source": "data"
           }
         }
       ],
+      "title": "Total Power Consumption",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -728,13 +565,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -744,21 +581,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"BatterySecondsRemaining\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -771,8 +594,7 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
+          }
         }
       ],
       "title": "Battery Seconds Remaining",
@@ -810,7 +632,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -859,13 +681,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -875,21 +697,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"AverageSpeed\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -902,8 +710,7 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
+          }
         }
       ],
       "title": "Average Speed",
@@ -912,7 +719,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -962,13 +769,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -978,21 +785,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"LapTime\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -1005,8 +798,7 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
+          }
         }
       ],
       "title": "Lap Time",
@@ -1028,7 +820,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -1106,13 +898,13 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -1122,48 +914,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"Acceleration\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"BrakeSwitchDigital\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"LeftSignalStatus\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"RightSignalStatus\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -1176,43 +927,16 @@
               }
             ],
             "limit": 50
-          },
-          "table": "telemetry_packet"
-        }
-      ],
-      "title": "Driving Behavior",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "Acceleration"
-              },
-              {
-                "path": "BrakeSwitchDigital"
-              },
-              {
-                "path": "LeftSignalStatus"
-              },
-              {
-                "path": "RightSignalStatus"
-              }
-            ],
-            "keepTime": false,
-            "replace": false,
-            "source": "B3"
           }
         }
       ],
+      "title": "Driving Behavior",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "description": "Critical system errors or safety trips within the battery management system.",
       "fieldConfig": {
@@ -1291,13 +1015,13 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -1307,48 +1031,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"ProximitySensor1\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"ProtectionTrip\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"MalfunctionIndicatorActive\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"ArrayContactorError\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -1361,71 +1044,16 @@
               }
             ],
             "limit": 50
-          },
-          "table": "telemetry_packet"
+          }
         }
       ],
       "title": "Safety",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "ProximitySensor1"
-              }
-            ],
-            "source": "ProximitySensors"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "ProtectionTrip"
-              }
-            ],
-            "source": "MBMS"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "MalfunctionIndicatorActive"
-              }
-            ],
-            "source": "Battery"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "Error"
-              }
-            ],
-            "source": "Contactor"
-          }
-        }
-      ],
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "af4xjlz3vm29sd"
+        "uid": "ffbv3rpe7yy2oc"
       },
       "fieldConfig": {
         "defaults": {
@@ -1474,13 +1102,13 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0-21490573584",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "af4xjlz3vm29sd"
+            "uid": "ffbv3rpe7yy2oc"
           },
           "editorMode": "code",
           "format": "table",
@@ -1490,21 +1118,7 @@
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "\"Timestamp\"",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
-                "parameters": [
-                  {
-                    "name": "\"Distance\"",
-                    "type": "functionParameter"
-                  }
-                ],
+                "parameters": [],
                 "type": "function"
               }
             ],
@@ -1517,27 +1131,10 @@
               }
             ],
             "limit": 50
-          },
-          "table": "lap"
-        }
-      ],
-      "title": "Total Distance",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "distance"
-              }
-            ],
-            "replace": true,
-            "source": "data"
           }
         }
       ],
+      "title": "Total Distance",
       "type": "stat"
     }
   ],
@@ -1556,6 +1153,5 @@
   "timezone": "browser",
   "title": "Das Telemetry Base Dashboard (History)",
   "uid": "shkw5wr",
-  "version": 11,
-  "weekStart": ""
+  "version": 2
 }
