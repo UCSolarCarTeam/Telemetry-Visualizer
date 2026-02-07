@@ -11,6 +11,23 @@ datasources:
     jsonData:
       username: ${MQTT_USERNAME}
       uri: host.docker.internal:1883
+
+  - name: grafana-postgresql-datasource
+    type: postgres
+    url: ${POSTGRES_HOST}
+    database: tsdb
+    user: ${POSTGRES_USERNAME}
+    secureJsonData:
+      password: ${POSTGRES_PASSWORD}
+    jsonData:
+      sslmode: "require"
+      postgresVersion: 9.3
+      timescaledb: true
+      minInterval: 1m
+      maxOpenConns: 100
+      maxIdleConns: 100
+      maxLifetime: 14400
+    editable: true
   # - name: Postgres
   #   type: postgres
   #   url: postgres:5432
