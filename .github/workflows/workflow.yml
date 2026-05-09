@@ -72,22 +72,28 @@ jobs:
             dashboard=$(jq 'del(.id)' "$file")
 
             # For each datasource listed in __inputs, look up its uid on Grafana
-            # Cloud by matching on pluginId (plugin type). Then rewrite every
-            # panel datasource object whose .type or .uid matches the local
-            # datasource — this covers both the standard plugin-type value
-            # (e.g. "postgres") and cases where Grafana exported the datasource
-            # name as the type (e.g. "grafana-postgresql-datasource").
+            # Cloud by matching on pluginId, datasource type, or name. Build an
+            # inputs array for the import payload (required when __inputs is
+            # present) and rewrite hardcoded panel UIDs at the same time.
+            resolved_inputs='[]'
             while IFS= read -r input_json; do
               plugin_id=$(echo "$input_json" | jq -r '.pluginId')
               local_uid=$(echo "$input_json" | jq -r '.label')
+              input_name=$(echo "$input_json" | jq -r '.name')
 
-              cloud_uid=$(echo "$datasources" | jq -r --arg t "$plugin_id" \
-                '.[] | select(.type == $t) | .uid' | head -1)
+              cloud_uid=$(echo "$datasources" | jq -r --arg t "$plugin_id" --arg n "$local_uid" \
+                '.[] | select(.type == $t or .type == $n or .name == $n) | .uid' | head -1)
 
               if [ -z "$cloud_uid" ]; then
-                echo "ERROR: no datasource with type '$plugin_id' found in Grafana Cloud"
+                echo "ERROR: no datasource with type '$plugin_id' or name '$local_uid' found in Grafana Cloud"
                 exit 1
               fi
+
+              resolved_inputs=$(echo "$resolved_inputs" | jq \
+                --arg name "$input_name" \
+                --arg plugin_id "$plugin_id" \
+                --arg uid "$cloud_uid" \
+                '. + [{"name": $name, "type": "datasource", "pluginId": $plugin_id, "value": $uid}]')
 
               dashboard=$(echo "$dashboard" | jq \
                 --arg plugin_id "$plugin_id" \
@@ -98,7 +104,8 @@ jobs:
 
             payload=$(jq -n \
               --argjson dashboard "$dashboard" \
-              '{dashboard: $dashboard, overwrite: true, folderUid: ""}')
+              --argjson inputs "$resolved_inputs" \
+              '{dashboard: $dashboard, overwrite: true, folderUid: "", inputs: $inputs}')
 
             response=$(curl -s -o /tmp/gf_response.json -w "%{http_code}" \
               -X POST "$GRAFANA_URL/api/dashboards/import" \
