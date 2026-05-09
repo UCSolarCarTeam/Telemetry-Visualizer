@@ -1,4 +1,22 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_MQTT",
+      "label": "MQTT",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "grafana-mqtt-datasource",
+      "pluginName": "MQTT"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "grafana-mqtt-datasource",
+      "name": "MQTT",
+      "version": "1.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -37,7 +55,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "uid": "grafana-mqtt-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -104,7 +122,7 @@
         {
           "datasource": {
             "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "uid": "grafana-mqtt-datasource"
           },
           "refId": "A",
           "topic": "packet"
@@ -133,7 +151,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "uid": "grafana-mqtt-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -241,7 +259,7 @@
         {
           "datasource": {
             "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "uid": "grafana-mqtt-datasource"
           },
           "refId": "A",
           "topic": "packet"
@@ -294,464 +312,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "kwatth"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 0,
-        "y": 9
-      },
-      "id": 11,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Energy Consumed",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "energyConsumed"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "kwatth"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 9
-      },
-      "id": 13,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Total Power In",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "totalPowerIn"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "amph"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 12,
-        "y": 9
-      },
-      "id": 10,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Average Pack Current",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "averagePackCurrent"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "kwatt"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
-        "y": 13
-      },
-      "id": 14,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Total Power Out",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "totalPowerOut"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
-        "y": 17
-      },
-      "id": 12,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Battery Seconds Remaining",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "batterySecondsRemaining"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -763,192 +323,6 @@
       "panels": [],
       "title": "Speed & Performance",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "velocitykmh"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
-        "y": 25
-      },
-      "id": 17,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Average Speed",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "averageSpeed"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "dtdurations"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 6,
-        "y": 25
-      },
-      "id": 18,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Lap Time",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "lapTime"
-              }
-            ],
-            "keepTime": false,
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
     },
     {
       "collapsed": false,
@@ -966,7 +340,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "uid": "grafana-mqtt-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -1074,7 +448,7 @@
         {
           "datasource": {
             "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "uid": "grafana-mqtt-datasource"
           },
           "refId": "A",
           "topic": "packet"
@@ -1112,7 +486,7 @@
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "uid": "grafana-mqtt-datasource"
       },
       "description": "Critical system errors or safety trips within the battery management system.",
       "fieldConfig": {
@@ -1221,7 +595,7 @@
         {
           "datasource": {
             "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "uid": "grafana-mqtt-datasource"
           },
           "refId": "A",
           "topic": "packet"
@@ -1275,7 +649,7 @@
             "format": "json",
             "jsonPaths": [
               {
-                "path": "Error"
+                "path": "ArrayContactorError"
               }
             ],
             "source": "Contactor"
@@ -1283,97 +657,6 @@
         }
       ],
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "lengthkm"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 41
-      },
-      "id": 15,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
-          },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
-          "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Total Distance",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "distance"
-              }
-            ],
-            "replace": true,
-            "source": "data"
-          }
-        }
-      ],
-      "type": "stat"
     }
   ],
   "preload": false,
@@ -1391,5 +674,5 @@
   "timezone": "browser",
   "title": "Das Telemetry Base Dashboard",
   "uid": "40c53014-a3c2-47e8-8c8b-3ce15a6ecc61",
-  "version": 14
+  "version": 16
 }
