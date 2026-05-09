@@ -1,4 +1,22 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_GRAFANA-POSTGRESQL-DATASOURCE",
+      "label": "grafana-postgresql-datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -35,6 +53,32 @@
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 8,
         "w": 6,
@@ -42,17 +86,53 @@
         "y": 1
       },
       "id": 3,
-      "libraryPanel": {
-        "name": "Pack State Of Charge",
-        "uid": "efagvhn0selfkc"
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "dataset": "tsdb",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"PackStateOfCharge\"\nFROM telemetry_packet\nWHERE $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [],
+            "limit": 50
+          }
+        }
+      ],
       "title": "Pack State Of Charge",
-      "type": "library-panel-ref"
+      "type": "gauge"
     },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -136,12 +216,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"PackCurrent\", \"PackVoltage\", \"PackStateOfCharge\", \"PackAmphours\", \"RegenBraking\" \nFROM telemetry_packet\nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"PackCurrent\", \"PackVoltage\", \"PackStateOfCharge\", \"PackAmphours\", \"RegenBraking\" \nFROM telemetry_packet\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -168,7 +248,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -223,12 +303,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"EnergyConsumed\" \nFROM lap\nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"EnergyConsumed\" \nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -255,7 +335,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -310,12 +390,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  \"Timestamp\" AS time,\n  \"TotalPowerIn\"\nFROM lap\nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT\n  \"timestamp\" AS time,\n  \"TotalPowerIn\"\nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -342,7 +422,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -397,12 +477,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"AveragePackCurrent\"\nFROM lap \nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"AveragePackCurrent\"\nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -429,7 +509,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -484,12 +564,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"TotalPowerOut\" \nFROM lap\nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"TotalPowerOut\" \nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -516,7 +596,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -571,12 +651,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"BatterySecondsRemaining\" \nFROM lap \nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"BatterySecondsRemaining\" \nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -632,7 +712,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -687,12 +767,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"AverageSpeed\" \nFROM lap\nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"AverageSpeed\" \nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -719,7 +799,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -775,12 +855,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"LapTime\" \nFROM lap \nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"LapTime\" \nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -820,7 +900,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -904,12 +984,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"Acceleration\", \"BrakeSwitchDigital\", \"LeftSignalStatus\", \"RightSignalStatus\" \nFROM telemetry_packet \nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"Acceleration\", \"BrakeSwitchDigital\", \"LeftSignalStatus\", \"RightSignalStatus\" \nFROM telemetry_packet \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -936,7 +1016,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "description": "Critical system errors or safety trips within the battery management system.",
       "fieldConfig": {
@@ -1021,12 +1101,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"ProximitySensor1\", \"Timestamp\", \"ProtectionTrip\", \"MalfunctionIndicatorActive\", \"ArrayContactorError\"\nFROM telemetry_packet \nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"ProximitySensor1\", \"timestamp\", \"ProtectionTrip\", \"MalfunctionIndicatorActive\", \"ArrayContactorError\"\nFROM telemetry_packet \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1053,7 +1133,7 @@
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "ffbv3rpe7yy2oc"
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -1108,12 +1188,12 @@
           "dataset": "tsdb",
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "ffbv3rpe7yy2oc"
+            "uid": "grafana-postgresql-datasource"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \"Timestamp\", \"Distance\" \nFROM lap \nWHERE\n  $__timeFilter(\"Timestamp\")\nORDER BY \"Timestamp\" ASC",
+          "rawSql": "SELECT \"timestamp\", \"Distance\" \nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
           "sql": {
             "columns": [

@@ -3,19 +3,19 @@ name: Docker Build and Test
 on:
   push:
     paths:
-      - 'grafana/**'
-      - '.github/workflows/workflow.yml'
+      - "grafana/**"
+      - ".github/workflows/workflow.yml"
   pull_request:
     paths:
-      - 'grafana/**'
-      - '.github/workflows/workflow.yml'
+      - "grafana/**"
+      - ".github/workflows/workflow.yml"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -49,3 +49,67 @@ jobs:
         run: |
           cd grafana
           docker compose down -v
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy dashboards to Grafana Cloud
+        env:
+          GRAFANA_URL: https://softwarecsc65.grafana.net
+          GRAFANA_TOKEN: ${{ secrets.GRAFANA_SERVICE_ACCOUNT_TOKEN }}
+        run: |
+          datasources=$(curl -sf \
+            -H "Authorization: Bearer $GRAFANA_TOKEN" \
+            "$GRAFANA_URL/api/datasources") || { echo "ERROR: failed to fetch datasources from Grafana Cloud"; exit 1; }
+
+          for file in grafana/dashboards/*.json; do
+            echo "Deploying $file..."
+            dashboard=$(jq 'del(.id)' "$file")
+
+            # For each datasource listed in __inputs, look up its uid on Grafana
+            # Cloud by matching on pluginId (plugin type). Then rewrite every
+            # panel datasource object whose .type or .uid matches the local
+            # datasource — this covers both the standard plugin-type value
+            # (e.g. "postgres") and cases where Grafana exported the datasource
+            # name as the type (e.g. "grafana-postgresql-datasource").
+            while IFS= read -r input_json; do
+              plugin_id=$(echo "$input_json" | jq -r '.pluginId')
+              local_uid=$(echo "$input_json" | jq -r '.label')
+
+              cloud_uid=$(echo "$datasources" | jq -r --arg t "$plugin_id" \
+                '.[] | select(.type == $t) | .uid' | head -1)
+
+              if [ -z "$cloud_uid" ]; then
+                echo "ERROR: no datasource with type '$plugin_id' found in Grafana Cloud"
+                exit 1
+              fi
+
+              dashboard=$(echo "$dashboard" | jq \
+                --arg plugin_id "$plugin_id" \
+                --arg local_uid "$local_uid" \
+                --arg cloud_uid "$cloud_uid" \
+                'walk(if type == "object" and has("uid") and (.type == $plugin_id or .type == $local_uid or .uid == $local_uid) then .uid = $cloud_uid else . end)')
+            done < <(echo "$dashboard" | jq -c '.__inputs[]?')
+
+            payload=$(jq -n \
+              --argjson dashboard "$dashboard" \
+              '{dashboard: $dashboard, overwrite: true, folderUid: ""}')
+
+            response=$(curl -s -o /tmp/gf_response.json -w "%{http_code}" \
+              -X POST "$GRAFANA_URL/api/dashboards/import" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $GRAFANA_TOKEN" \
+              -d "$payload")
+
+            if [ "$response" != "200" ]; then
+              echo "Failed to deploy $file (HTTP $response)"
+              cat /tmp/gf_response.json
+              exit 1
+            fi
+            echo "Successfully deployed $file"
+          done
