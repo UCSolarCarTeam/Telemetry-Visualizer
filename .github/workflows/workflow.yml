@@ -1,4 +1,4 @@
-name: Docker Build and Test
+name: Build, Test, and Deploy
 
 on:
   push:
@@ -62,61 +62,4 @@ jobs:
         env:
           GRAFANA_URL: https://softwarecsc65.grafana.net
           GRAFANA_TOKEN: ${{ secrets.GRAFANA_SERVICE_ACCOUNT_TOKEN }}
-        run: |
-          datasources=$(curl -sf \
-            -H "Authorization: Bearer $GRAFANA_TOKEN" \
-            "$GRAFANA_URL/api/datasources") || { echo "ERROR: failed to fetch datasources from Grafana Cloud"; exit 1; }
-
-          for file in grafana/dashboards/*.json; do
-            echo "Deploying $file..."
-            dashboard=$(jq 'del(.id)' "$file")
-
-            # For each datasource listed in __inputs, look up its uid on Grafana
-            # Cloud by matching on pluginId, datasource type, or name. Build an
-            # inputs array for the import payload (required when __inputs is
-            # present) and rewrite hardcoded panel UIDs at the same time.
-            resolved_inputs='[]'
-            while IFS= read -r input_json; do
-              plugin_id=$(echo "$input_json" | jq -r '.pluginId')
-              local_uid=$(echo "$input_json" | jq -r '.label')
-              input_name=$(echo "$input_json" | jq -r '.name')
-
-              cloud_uid=$(echo "$datasources" | jq -r --arg t "$plugin_id" --arg n "$local_uid" \
-                '.[] | select(.type == $t or .type == $n or .name == $n) | .uid' | head -1)
-
-              if [ -z "$cloud_uid" ]; then
-                echo "ERROR: no datasource with type '$plugin_id' or name '$local_uid' found in Grafana Cloud"
-                exit 1
-              fi
-
-              resolved_inputs=$(echo "$resolved_inputs" | jq \
-                --arg name "$input_name" \
-                --arg plugin_id "$plugin_id" \
-                --arg uid "$cloud_uid" \
-                '. + [{"name": $name, "type": "datasource", "pluginId": $plugin_id, "value": $uid}]')
-
-              dashboard=$(echo "$dashboard" | jq \
-                --arg plugin_id "$plugin_id" \
-                --arg local_uid "$local_uid" \
-                --arg cloud_uid "$cloud_uid" \
-                'walk(if type == "object" and has("uid") and (.type == $plugin_id or .type == $local_uid or .uid == $local_uid) then .uid = $cloud_uid else . end)')
-            done < <(echo "$dashboard" | jq -c '.__inputs[]?')
-
-            payload=$(jq -n \
-              --argjson dashboard "$dashboard" \
-              --argjson inputs "$resolved_inputs" \
-              '{dashboard: $dashboard, overwrite: true, folderUid: "", inputs: $inputs}')
-
-            response=$(curl -s -o /tmp/gf_response.json -w "%{http_code}" \
-              -X POST "$GRAFANA_URL/api/dashboards/import" \
-              -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $GRAFANA_TOKEN" \
-              -d "$payload")
-
-            if [ "$response" != "200" ]; then
-              echo "Failed to deploy $file (HTTP $response)"
-              cat /tmp/gf_response.json
-              exit 1
-            fi
-            echo "Successfully deployed $file"
-          done
+        run: bash grafana/scripts/deploy.sh
