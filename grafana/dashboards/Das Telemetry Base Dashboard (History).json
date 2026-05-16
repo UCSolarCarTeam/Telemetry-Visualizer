@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -36,8 +36,8 @@
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -59,23 +59,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "FanSpeed"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": []
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -102,38 +86,35 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"PackStateOfCharge\"\nFROM telemetry_packet\nWHERE $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "packet"
-        }
-      ],
-      "title": "Pack State Of Charge",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "PackStateOfCharge"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "keepTime": false,
-            "replace": true,
-            "source": "Battery"
+            "groupBy": [],
+            "limit": 50
           }
         }
       ],
+      "title": "Pack State Of Charge",
       "type": "gauge"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -189,32 +170,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "PackCurrent"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -239,66 +195,43 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"PackCurrent\", \"PackVoltage\", \"PackStateOfCharge\", \"PackAmphours\", \"RegenBraking\" \nFROM telemetry_packet\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "packet"
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
         }
       ],
       "title": "Packet (History)",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "PackVoltage"
-              },
-              {
-                "path": "PackCurrent"
-              },
-              {
-                "alias": "PackStateOfCharge (SOC)",
-                "path": "PackStateOfCharge"
-              },
-              {
-                "alias": "PackAmphours (Ah)",
-                "path": "PackAmphours"
-              }
-            ],
-            "keepTime": false,
-            "replace": false,
-            "source": "Battery"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "RegenBraking"
-              }
-            ],
-            "keepTime": false,
-            "replace": false,
-            "source": "B3"
-          }
-        }
-      ],
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -349,48 +282,43 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"EnergyConsumed\" \nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Energy Consumed",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "energyConsumed"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Energy Consumed",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -441,46 +369,42 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  \"timestamp\" AS time,\n  \"TotalPowerIn\"\nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Total Power In",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "totalPowerIn"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Total Power In",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -532,48 +456,43 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"AveragePackCurrent\"\nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Average Pack Current",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "averagePackCurrent"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Average Pack Current",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -624,46 +543,42 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"TotalPowerOut\" \nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Total Power Out",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "totalPowerOut"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Total Power Consumption",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -689,7 +604,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 0,
         "y": 17
@@ -715,21 +630,33 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"BatterySecondsRemaining\" \nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
         }
       ],
       "title": "Battery Seconds Remaining",
@@ -757,7 +684,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 25
       },
       "id": 16,
       "panels": [],
@@ -766,10 +693,9 @@
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -797,7 +723,7 @@
         "h": 7,
         "w": 6,
         "x": 0,
-        "y": 25
+        "y": 26
       },
       "id": 17,
       "options": {
@@ -820,48 +746,43 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"AverageSpeed\" \nFROM lap\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Average Speed",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "averageSpeed"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Average Speed",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -882,7 +803,7 @@
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "dthms"
         },
         "overrides": []
       },
@@ -890,7 +811,7 @@
         "h": 7,
         "w": 6,
         "x": 6,
-        "y": 25
+        "y": 26
       },
       "id": 18,
       "options": {
@@ -913,41 +834,36 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"LapTime\" \nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Lap Time",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "lapTime"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "keepTime": false,
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Lap Time",
       "type": "stat"
     },
     {
@@ -956,7 +872,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 33
       },
       "id": 8,
       "panels": [],
@@ -965,8 +881,8 @@
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -1022,38 +938,13 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "RightSignalStatus"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 33
+        "y": 34
       },
       "id": 7,
       "options": {
@@ -1072,47 +963,42 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"Acceleration\", \"BrakeSwitchDigital\", \"LeftSignalStatus\", \"RightSignalStatus\" \nFROM telemetry_packet \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "packet"
-        }
-      ],
-      "title": "Driving Behavior",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "Acceleration"
-              },
-              {
-                "path": "BrakeSwitchDigital"
-              },
-              {
-                "path": "LeftSignalStatus"
-              },
-              {
-                "path": "RightSignalStatus"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "keepTime": false,
-            "replace": false,
-            "source": "B3"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Driving Behavior",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "description": "Critical system errors or safety trips within the battery management system.",
       "fieldConfig": {
@@ -1169,38 +1055,13 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "MalfunctionIndicatorActive"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 34
       },
       "id": 9,
       "options": {
@@ -1219,75 +1080,42 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "grafana-mqtt-datasource",
-            "uid": "P51B197A508373975"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"ProximitySensor1\", \"timestamp\", \"ProtectionTrip\", \"MalfunctionIndicatorActive\", \"ArrayContactorError\"\nFROM telemetry_packet \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "packet"
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
         }
       ],
       "title": "Safety",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "ProximitySensor1"
-              }
-            ],
-            "source": "ProximitySensors"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "ProtectionTrip"
-              }
-            ],
-            "source": "MBMS"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "MalfunctionIndicatorActive"
-              }
-            ],
-            "source": "Battery"
-          }
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
-              {
-                "path": "Error"
-              }
-            ],
-            "source": "Contactor"
-          }
-        }
-      ],
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "P51B197A508373975"
+        "type": "grafana-postgresql-datasource",
+        "uid": "grafana-postgresql-datasource"
       },
       "fieldConfig": {
         "defaults": {
@@ -1316,7 +1144,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 41
+        "y": 42
       },
       "id": 15,
       "options": {
@@ -1339,40 +1167,36 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
+          "dataset": "tsdb",
           "datasource": {
-            "type": "golioth-websocket-datasource",
-            "uid": "bf4fqic90e41se"
+            "type": "grafana-postgresql-datasource",
+            "uid": "grafana-postgresql-datasource"
           },
-          "fields": [
-            {
-              "jsonPath": "$.data.data",
-              "language": "jsonpath",
-              "name": ""
-            }
-          ],
-          "path": "",
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \"timestamp\", \"Distance\" \nFROM lap \nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY \"timestamp\" ASC",
           "refId": "A",
-          "topic": "lapdata",
-          "withStreaming": true
-        }
-      ],
-      "title": "Total Distance",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "format": "json",
-            "jsonPaths": [
+          "sql": {
+            "columns": [
               {
-                "path": "distance"
+                "parameters": [],
+                "type": "function"
               }
             ],
-            "replace": true,
-            "source": "data"
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
           }
         }
       ],
+      "title": "Total Distance",
       "type": "stat"
     }
   ],
@@ -1384,12 +1208,12 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Das Telemetry Base Dashboard",
-  "uid": "40c53014-a3c2-47e8-8c8b-3ce15a6ecc61",
-  "version": 14
+  "title": "Das Telemetry Base Dashboard (History)",
+  "uid": "shkw5wr",
+  "version": 4
 }
